@@ -79,3 +79,24 @@ def to_zhuyin_pinyin_from_file(infile, outfile):
                " ".join(sentences_zhuyin[i]),
                " ".join(sentences_pinyin[i])
             ))
+
+def to_pypinyin_phones_from_file(infile, outfile):
+   """
+   :param str infile: path to file of raw input sentences
+   :param str outfile: path to the output file, in tab-separated format
+   """
+   TWM_g2p = TaiwanMandarinG2P()
+
+   with open(infile, 'r', encoding='utf-8') as f:
+      sentences = f.readlines()
+
+      _, sentences_pinyin = TWM_g2p.g2p_pinyin(sentences)
+      sentences_phones = to_pypinyin_phones(sentences_pinyin)
+
+      with open(outfile, 'w', encoding="utf-8") as o:
+         for i in range(len(sentences)):
+            o.write("{}\t{}\t{}\n".format(
+               sentences[i], 
+               " ".join(sentences_pinyin[i]),
+               " ".join(sentences_phones[i])
+            ))
