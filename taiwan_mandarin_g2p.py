@@ -47,7 +47,7 @@ class TaiwanMandarinG2P:
       for sentence in sentences_zhuyin:
          pinyin = []
          for word in sentence:
-            if word in PUNC:
+            if any(c in PUNC for c in word):
                pinyin.append(word)
             else:
                pinyin.append(zhuyin_to_pinyin(word[:-1])[:-1] + word[-1])
