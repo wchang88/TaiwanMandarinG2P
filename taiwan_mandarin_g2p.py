@@ -25,7 +25,7 @@ class TaiwanMandarinG2P:
          split_sentence = r.split(sentence) # splits punctuation into their own string
          zhuyin = []
          for s in split_sentence:
-            if s in PUNC:
+            if any(c in PUNC for c in s):
                zhuyin.append(s)
             elif len(s) > 0:
                zhuyin.extend(self.__g2p(s)[0])
