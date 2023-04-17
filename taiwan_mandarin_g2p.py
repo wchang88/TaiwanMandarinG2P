@@ -16,7 +16,7 @@ class TaiwanMandarinG2P:
 
       :return: zhuyin transcriptions
       """
-      r = regex.compile(r"(\p{P})+")
+      r = regex.compile(r"(\p{P}+)")
       PUNC = [chr(i) for i in range(sys.maxunicode) if category(chr(i)).startswith("P")]
 
       sentences_zhuyin = []
