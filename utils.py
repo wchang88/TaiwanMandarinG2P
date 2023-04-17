@@ -1,6 +1,8 @@
 from pypinyin import Style, pinyin
 from pypinyin.style._utils import get_finals, get_initials
 
+from taiwan_mandarin_g2p import TaiwanMandarinG2P
+
 def to_pypinyin_phones(sentences_pinyin):
    """
    :param list[str] sentences_pinyin: pinyin transcriptions to convert into ESPNet 
@@ -25,3 +27,55 @@ def to_pypinyin_phones(sentences_pinyin):
       ]
       sentences_phones.append(phones)
    return sentences_phones
+
+def to_zhuyin_from_file(infile, outfile):
+   """
+   :param str infile: path to file of raw input sentences
+   :param str outfile: path to the output file, in tab-separated format
+   """
+   TWM_g2p = TaiwanMandarinG2P()
+
+   with open(infile, 'r', encoding='utf-8') as f:
+      sentences = f.readlines()
+
+      sentences_zhuyin = TWM_g2p.g2p_zhuyin(sentences)
+
+      with open(outfile, 'w', encoding="utf-8") as o:
+         for i in range(len(sentences)):
+            o.write("{}\t{}\n".format(sentences[i], " ".join(sentences_zhuyin[i])))
+
+def to_pinyin_from_file(infile, outfile):
+   """
+   :param str infile: path to file of raw input sentences
+   :param str outfile: path to the output file, in tab-separated format
+   """
+   TWM_g2p = TaiwanMandarinG2P()
+
+   with open(infile, 'r', encoding='utf-8') as f:
+      sentences = f.readlines()
+
+      _, sentences_pinyin = TWM_g2p.g2p_pinyin(sentences)
+
+      with open(outfile, 'w', encoding="utf-8") as o:
+         for i in range(len(sentences)):
+            o.write("{}\t{}\n".format(sentences[i], " ".join(sentences_pinyin[i])))
+
+def to_zhuyin_pinyin_from_file(infile, outfile):
+   """
+   :param str infile: path to file of raw input sentences
+   :param str outfile: path to the output file, in tab-separated format
+   """
+   TWM_g2p = TaiwanMandarinG2P()
+
+   with open(infile, 'r', encoding='utf-8') as f:
+      sentences = f.readlines()
+
+      sentences_zhuyin, sentences_pinyin = TWM_g2p.g2p_pinyin(sentences)
+
+      with open(outfile, 'w', encoding="utf-8") as o:
+         for i in range(len(sentences)):
+            o.write("{}\t{}\t{}\n".format(
+               sentences[i], 
+               " ".join(sentences_zhuyin[i]),
+               " ".join(sentences_pinyin[i])
+            ))
