@@ -21,6 +21,7 @@ class TaiwanMandarinG2P:
 
       sentences_zhuyin = []
       for sentence in sentences:
+         sentence = ''.join(sentence.split())
          split_sentence = r.split(sentence) # splits punctuation into their own string
          zhuyin = []
          for s in split_sentence:
