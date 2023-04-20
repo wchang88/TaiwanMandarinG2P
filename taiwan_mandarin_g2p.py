@@ -7,8 +7,8 @@ from pyzhuyin import zhuyin_to_pinyin
 
 
 class TaiwanMandarinG2P:
-   def __init__(self):
-      self.__g2p = G2PWConverter()
+   def __init__(self, allow_simplified=False):
+      self.__g2p = G2PWConverter(enable_non_tradional_chinese=allow_simplified)
 
    def g2p_zhuyin(self, sentences):
       """
