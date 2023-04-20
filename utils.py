@@ -102,7 +102,7 @@ def to_pypinyin_phones_from_file(infile, outfile):
       sentences = f.readlines()
 
       _, sentences_pinyin = TWM_g2p.g2p_pinyin(sentences)
-      sentences_phones = to_pypinyin_phones(sentences_pinyin)
+      sentences_phones = to_espnet_pypinyin_g2p_phone(sentences_pinyin)
 
       with open(outfile, 'w', encoding="utf-8") as o:
          for i in range(len(sentences)):
