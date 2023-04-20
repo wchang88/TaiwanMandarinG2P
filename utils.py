@@ -3,7 +3,7 @@ from pypinyin.style._utils import get_finals, get_initials
 
 from taiwan_mandarin_g2p import TaiwanMandarinG2P
 
-def to_pypinyin_phones(sentences_pinyin, strict=True):
+def to_pypinyin_phones(sentences_pinyin, strict=False):
    """
    :param list[str] sentences_pinyin: pinyin transcriptions to convert into 
       initial and final phonemes
