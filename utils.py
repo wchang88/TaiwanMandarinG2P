@@ -3,10 +3,12 @@ from pypinyin.style._utils import get_finals, get_initials
 
 from taiwan_mandarin_g2p import TaiwanMandarinG2P
 
-def to_pypinyin_phones(sentences_pinyin):
+def to_pypinyin_phones(sentences_pinyin, strict=True):
    """
-   :param list[str] sentences_pinyin: pinyin transcriptions to convert into ESPNet 
-      pypinyin_g2p_phone() form
+   :param list[str] sentences_pinyin: pinyin transcriptions to convert into 
+      initial and final phonemes
+   :param bool strict: from pypinyin documentation, 
+      是否严格遵照《汉语拼音方案》来处理声母和韵母 
 
    :return: pinyin transcriptions separated by phones
    """
@@ -16,10 +18,10 @@ def to_pypinyin_phones(sentences_pinyin):
          p 
          for pinyin in sentence
          for p in [
-            get_initials([pinyin][0], strict=True),
-            get_finals([pinyin][0][:-1], strict=True) + [pinyin][0][-1]
+            get_initials([pinyin][0], strict=strict),
+            get_finals([pinyin][0][:-1], strict=strict) + [pinyin][0][-1]
             if [pinyin][0][-1].isdigit()
-            else get_finals([pinyin][0], strict=True)
+            else get_finals([pinyin][0], strict=strict)
             if [pinyin][0][-1].isalnum()
             else [pinyin][0],
          ]
@@ -27,6 +29,15 @@ def to_pypinyin_phones(sentences_pinyin):
       ]
       sentences_phones.append(phones)
    return sentences_phones
+
+def to_espnet_pypinyin_g2p_phone(sentences_pinyin):
+   """
+   :param list[str] sentences_pinyin: pinyin transcriptions to convert into ESPNet 
+      pypinyin_g2p_phone() form
+
+   :return: pinyin transcriptions separated by phones
+   """
+   return to_pypinyin_phones(sentences_pinyin, strict=True)
 
 def to_zhuyin_from_file(infile, outfile):
    """
