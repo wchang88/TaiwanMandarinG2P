@@ -39,7 +39,7 @@ class TaiwanMandarinG2P:
 
       :return: (zhuyin transcriptions, pinyin transcriptions)
       """
-      r = regex.compile(r"([\u4e00-\u9fff]+)")
+      r = regex.compile(r"([\u3100-\u312f]+)")
 
       sentences_zhuyin = self.g2p_zhuyin(sentences)
 
