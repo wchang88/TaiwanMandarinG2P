@@ -16,8 +16,7 @@ class TaiwanMandarinG2P:
 
       :return: zhuyin transcriptions
       """
-      r = regex.compile(r"(\p{P}+)")
-      PUNC = [chr(i) for i in range(sys.maxunicode) if category(chr(i)).startswith("P")]
+      r = regex.compile(r"([\u4e00-\u9fff]+)")
 
       sentences_zhuyin = []
       for sentence in sentences:
@@ -25,10 +24,11 @@ class TaiwanMandarinG2P:
          split_sentence = r.split(sentence) # splits punctuation into their own string
          zhuyin = []
          for s in split_sentence:
-            if any(c in PUNC for c in s):
-               zhuyin.append(s)
-            elif len(s) > 0:
-               zhuyin.extend(self.__g2p(s)[0])
+            if len(s) > 0:
+               if r.search(s):
+                  zhuyin.extend(self.__g2p(s)[0])
+               else:
+                  zhuyin.append(s)
          sentences_zhuyin.append(zhuyin)
 
       return sentences_zhuyin
@@ -39,7 +39,7 @@ class TaiwanMandarinG2P:
 
       :return: (zhuyin transcriptions, pinyin transcriptions)
       """
-      PUNC = [chr(i) for i in range(sys.maxunicode) if category(chr(i)).startswith("P")]
+      r = regex.compile(r"([\u4e00-\u9fff]+)")
 
       sentences_zhuyin = self.g2p_zhuyin(sentences)
 
@@ -47,10 +47,10 @@ class TaiwanMandarinG2P:
       for sentence in sentences_zhuyin:
          pinyin = []
          for word in sentence:
-            if any(c in PUNC for c in word):
-               pinyin.append(word)
-            else:
+            if r.search(word):
                pinyin.append(zhuyin_to_pinyin(word[:-1])[:-1] + word[-1])
+            else:
+               pinyin.append(word)
          sentences_pinyin.append(pinyin)
 
       return sentences_zhuyin, sentences_pinyin
