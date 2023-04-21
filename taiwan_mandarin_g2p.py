@@ -39,14 +39,14 @@ class TaiwanMandarinG2P:
       """
       r = regex.compile(r"([\u3100-\u312f]+)")
 
-      sentences_zhuyin = self.g2p_zhuyin(sentences, u_to_v=u_to_v)
+      sentences_zhuyin = self.g2p_zhuyin(sentences)
 
       sentences_pinyin = []
       for sentence in sentences_zhuyin:
          pinyin = []
          for word in sentence:
             if r.search(word):
-               pinyin.append(zhuyin_to_pinyin(word[:-1])[:-1] + word[-1])
+               pinyin.append(zhuyin_to_pinyin(word[:-1], u_to_v=u_to_v)[:-1] + word[-1])
             else:
                pinyin.append(word)
          sentences_pinyin.append(pinyin)
