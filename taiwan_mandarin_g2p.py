@@ -1,6 +1,4 @@
 import regex
-import sys
-from unicodedata import category
 
 from g2pw import G2PWConverter
 from pyzhuyin import zhuyin_to_pinyin
