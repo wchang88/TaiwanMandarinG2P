@@ -31,7 +31,7 @@ class TaiwanMandarinG2P:
 
       return sentences_zhuyin
 
-   def g2p_pinyin(self, sentences):
+   def g2p_pinyin(self, sentences, u_to_v=False):
       """
       :param list[str] sentences: raw sentences to convert to pinyin
 
@@ -39,7 +39,7 @@ class TaiwanMandarinG2P:
       """
       r = regex.compile(r"([\u3100-\u312f]+)")
 
-      sentences_zhuyin = self.g2p_zhuyin(sentences)
+      sentences_zhuyin = self.g2p_zhuyin(sentences, u_to_v=u_to_v)
 
       sentences_pinyin = []
       for sentence in sentences_zhuyin:
